@@ -8,6 +8,8 @@ const IMAGE_EXTS = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"]);
 const ENHANCED_RE = /^(.*)_(enhanced|ehanced)$/i;
 
 function findPairs(): Pair[] {
+  // Folder is gitignored, so it may be missing (e.g. a fresh clone or Git deploy)
+  if (!fs.existsSync(PHOTOS_DIR)) return [];
   const files = fs
     .readdirSync(PHOTOS_DIR)
     .filter((f) => IMAGE_EXTS.has(path.extname(f).toLowerCase()));
